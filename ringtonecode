@@ -1,0 +1,63 @@
+# title: Ringtone
+# author: Joshua Vento-Jones
+# description: This is my ringtone for "Assignment 5: Design a Ringtone"
+
+from earsketch import *
+#Asks user for what tempo (in bpm) they'd like.
+tempo=int(input("What would you like the BPM to be for this ringtone?"))
+setTempo(tempo)
+
+#Sets beats for the clap and hihat on the pre-beatdrop
+beat1 = "0++++---0++++"
+beat2 = "0++0++0"
+
+#Function for main beat before beat drop
+def beatSection(startMeasure, endMeasure):
+    for i in range(startMeasure, endMeasure):
+        makeBeat(CIARA_SET_PERC_CLAP_1, 3, i, beat1)
+        makeBeat(CIARA_SET_PERC_HIHAT_2, 4, i, beat2)
+        
+#Allows first loop to work and automatically add sounds to measure in 4 beats
+sounds = [MILKNSIZZ_BUENA_FLUTTER_PIANO, MILKNSIZZ_LATE_SPRING_ARPEGGIO_SYNTH]
+for i in range(len(sounds)):
+    sound = sounds[i]
+    track = i+1
+    startMeasure = i * 4 + 1
+    fitMedia(sound, track, startMeasure, 13)
+
+beatSection(9, 17)
+
+#Repeat synth right before beat drop
+fitMedia(CIARA_SET_PERC_HIHAT_2, 5, 9, 16)
+for i in range(13, 17):
+    fitMedia(CIARA_SET_THEME_ATMOS_1, 1, i, i+1)
+    
+for i in range(17, 19):
+    fitMedia(CIARA_SET_THEME_ATMOS_1, 1, i, i+0.5)
+    fitMedia(CIARA_SET_THEME_ATMOS_1, 1, i+0.5, i+1)
+
+for i in range(19, 21): 
+    fitMedia(CIARA_SET_THEME_ATMOS_1, 1, i, i+0.25)
+    fitMedia(CIARA_SET_THEME_ATMOS_1, 2, i+0.25, i+0.5)
+    fitMedia(CIARA_SET_THEME_ATMOS_1, 1, i+0.5, i+0.75)
+    fitMedia(CIARA_SET_THEME_ATMOS_1, 2, i+0.75, i+1)
+
+#Beat Drop
+fitMedia(CIARA_SET_THEME_MELSYNTH, 1, 21, 36)
+fitMedia(MILKNSIZZ_LATE_SPRING_ARPEGGIO_SYNTH, 6, 13, 20)
+fitMedia(MILKNSIZZ_LATE_SPRING_REVERSE_GUITAR, 6, 20, 21)
+fitMedia(HOUSE_SFX_WHOOSH_001, 5, 19, 21)
+fitMedia(ELECTRO_DRUM_MAIN_BEAT_004, 3, 20.5, 21)
+fitMedia(MILKNSIZZ_LATE_SPRING_BIG_BRASS, 6, 21, 37)
+fitMedia(MILKNSIZZ_LATE_SPRING_REVERSE_GUITAR, 3, 25, 37)
+fitMedia(RD_POP_BRIGHTLEAD_1, 4, 29, 37)
+fitMedia(TECHNO_WHITENOISESFX_003, 5, 37, 39)
+fitMedia(ELECTRO_DRUM_MAIN_BEAT_004, 2, 21, 41)
+
+#Sets reverb to main synth in 1st track
+setEffect(1, REVERB, REVERB_TIME, 100.0)
+setEffect(1, REVERB, MIX, 0.3)
+
+print("Enjoy :D")
+
+finish()
